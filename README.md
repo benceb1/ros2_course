@@ -18,17 +18,35 @@ Please note that this code assumes it is being used in a ROS2 environment and re
 
 ## Usage
 
+### In first terminal
+1. Set up turtlebot model
+```
+$ export TURTLEBOT3_MODEL=burger
+```
+2. Set up Gazebo model path
+```
+$ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:`ros2 pkg \
+prefix turtlebot3_gazebo \
+`/share/turtlebot3_gazebo/models/
+```
+3. Launch Gazebo with simulation world
+```
+$ ros2 launch turtlebot3_gazebo empty_world.launch.py
+```
+
+### In second terminal
+
+Set up turtlebot model
+```
+$ export TURTLEBOT3_MODEL=burger
+```
+
 How to *build* and use the package.
 
     cd ~/ros2_ws
     colcon build --symlink-install
 
-
-bemutatás
-
-használat (ide a build)
-- kódok az egyik terminálba a turtle inditásához
-
-- másik terminal build + config + indítás
-
-osztályleírás
+Run our program
+```
+$ ros2 run ros2_course turtlesim_controller
+```
