@@ -14,12 +14,14 @@ class TurtleController(Node):
 
         self.laser = None
         self.imu = None
+        self.laser_angle = 60
 
         self.laser_subscriber = self.create_subscription(
             LaserScan,
             '/scan',
             self.laser_callback,
             10)
+
         self.imu_subscriber = self.create_subscription(
             Imu,
             '/imu',
@@ -76,10 +78,29 @@ class TurtleController(Node):
 
             #self.get_logger().info(f'On its way...{vel_msg}')
 
-            if (self.laser is not None):
-                self.get_logger().info(f' laserinfo: [{str(self.laser.ranges)}]')
+            #if (self.laser is not None):
+                #self.get_logger().info(f' laserinfo: [{str(self.laser.ranges)}]')
 
-            # itt majd az angular zvel kell irányítani a self.laser.ranges alapján
+            if (self.laser is not None):
+                angles_left = self.laser.ranges[-30:]
+                angles_right = self.laser.ranges[:30]
+                angles_fw = angles_left + angles_right
+
+
+                turning = False
+                small_distance = 0
+
+                for a in angles_fw:
+                    if a < 1:
+                        small_distance = a
+                        turning = True
+                        break
+
+                if (turning):
+                    turning_omega = float((1 - small_distance) * 90)
+                    vel_msg.angular.z = math.radians(turning_omega)
+                else:
+                    vel_msg.angular.z = 0.0
 
             self.twist_pub.publish(vel_msg)
             rclpy.spin_once(self)   # loop rate
