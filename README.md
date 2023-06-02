@@ -17,6 +17,7 @@ The main() function initializes the ROS2 node, creates an instance of TurtleCont
 Please note that this code assumes it is being used in a ROS2 environment and relies on specific message types (LaserScan, Imu, Odometry, and Twist) and topics (/scan, /imu, /odom, and /cmd_vel). Make sure to provide the appropriate message types and topic names based on your specific ROS2 setup.
 
 ## Usage
+(The description is made for an already working and installed system)
 
 ### In first terminal
 1. Set up turtlebot model
@@ -50,3 +51,4 @@ Run our program
 ```
 $ ros2 run ros2_course turtlesim_controller
 ```
+˙
